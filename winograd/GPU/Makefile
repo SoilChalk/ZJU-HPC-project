@@ -1,5 +1,5 @@
-CC = nvcc
-CFLAGS = -O3 -std=c++17
+CC = /usr/local/cuda/bin/nvcc
+CFLAGS = -O3 -std=c++17 -arch=compute_70 -code=sm_70
 TARGET = winograd
 SOURCES = main.cu naive_conv.cu winograd_conv.cu
 
