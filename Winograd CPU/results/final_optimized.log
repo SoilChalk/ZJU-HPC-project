@@ -1,0 +1,77 @@
+Compiling final optimized version from src/ directory...
+rm -f winograd
+gcc -std=c11 -O3 -fopenmp src/main.c src/naive_conv.c src/winograd_conv.c -o winograd
+src/winograd_conv.c: In function ‘winograd_conv’:
+src/winograd_conv.c:127:34: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  127 |             float* filters_ptr = filter + (k * C + c) * sizeF;
+      |                                  ^~~~~~
+Running final benchmark...
+=== Running Naive Convolution ===
+Layer  0: 34.90 ms (76.7 GFLOPS)
+Layer  1: 251.40 ms (113.6 GFLOPS)
+Layer  2: 491.61 ms (116.1 GFLOPS)
+Layer  3: 942.63 ms (121.1 GFLOPS)
+Layer  4: 2110.76 ms (108.2 GFLOPS)
+Layer  5: 670.72 ms (129.7 GFLOPS)
+Layer  6: 1432.20 ms (121.5 GFLOPS)
+Layer  7: 2958.73 ms (117.6 GFLOPS)
+Layer  8: 6361.89 ms (109.4 GFLOPS)
+Layer  9: 2531.99 ms (93.5 GFLOPS)
+Layer 10: 29.04 ms (73.1 GFLOPS)
+Layer 11: 480.64 ms (94.3 GFLOPS)
+Layer 12: 244.79 ms (88.8 GFLOPS)
+Layer 13: 398.04 ms (109.3 GFLOPS)
+Layer 14: 93.41 ms (130.9 GFLOPS)
+Layer 15: 50.30 ms (84.4 GFLOPS)
+Layer 16: 86.57 ms (130.8 GFLOPS)
+Layer 17: 131.96 ms (82.4 GFLOPS)
+Baseline Total: 19301.57 ms (110.0 GFLOPS)
+
+=== Running Winograd Convolution ===
+Layer  0: 52.51 ms (51.0 GFLOPS)
+Layer  1: 46.71 ms (611.1 GFLOPS)
+Layer  2: 62.39 ms (915.1 GFLOPS)
+Layer  3: 220.33 ms (518.3 GFLOPS)
+Layer  4: 196.34 ms (1163.2 GFLOPS)
+Layer  5: 99.09 ms (877.7 GFLOPS)
+Layer  6: 171.26 ms (1015.7 GFLOPS)
+Layer  7: 558.06 ms (623.4 GFLOPS)
+Layer  8: 754.15 ms (922.6 GFLOPS)
+Layer  9: 172.77 ms (1370.4 GFLOPS)
+Layer 10: 43.01 ms (49.4 GFLOPS)
+Layer 11: 130.20 ms (348.0 GFLOPS)
+Layer 12: 276.30 ms (78.7 GFLOPS)
+Layer 13: 508.19 ms (85.6 GFLOPS)
+Layer 14: 59.58 ms (205.3 GFLOPS)
+Layer 15: 40.46 ms (105.0 GFLOPS)
+Layer 16: 54.32 ms (208.5 GFLOPS)
+Layer 17: 52.18 ms (208.3 GFLOPS)
+Custom Total: 3497.87 ms (607.1 GFLOPS)
+
+=== Correctness Check ===
+Layer  0: [32mCORRECT[0m (Speedup: 0.66x)
+Layer  1: [32mCORRECT[0m (Speedup: 5.38x)
+Layer  2: [32mCORRECT[0m (Speedup: 7.88x)
+Layer  3: [32mCORRECT[0m (Speedup: 4.28x)
+Layer  4: [32mCORRECT[0m (Speedup: 10.75x)
+Layer  5: [32mCORRECT[0m (Speedup: 6.77x)
+Layer  6: [32mCORRECT[0m (Speedup: 8.36x)
+Layer  7: [32mCORRECT[0m (Speedup: 5.30x)
+Layer  8: [32mCORRECT[0m (Speedup: 8.44x)
+Layer  9: [32mCORRECT[0m (Speedup: 14.65x)
+Layer 10: [32mCORRECT[0m (Speedup: 0.68x)
+Layer 11: [32mCORRECT[0m (Speedup: 3.69x)
+Layer 12: [32mCORRECT[0m (Speedup: 0.89x)
+Layer 13: [32mCORRECT[0m (Speedup: 0.78x)
+Layer 14: [32mCORRECT[0m (Speedup: 1.57x)
+Layer 15: [32mCORRECT[0m (Speedup: 1.24x)
+Layer 16: [32mCORRECT[0m (Speedup: 1.59x)
+Layer 17: [32mCORRECT[0m (Speedup: 2.53x)
+
+=== Final Results ===
+[32mResults are correct!
+[0mBaseline: 19301.57 ms (110.0 GFLOPS)
+Custom:   3497.87 ms (607.1 GFLOPS)
+Overall speedup: 5.52x
+Moving final log to results/ directory...
+Done.
